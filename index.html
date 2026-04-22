@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arkiruoka</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="header-copy">
+          <p class="eyebrow">Viikkosuunnittelu</p>
+          <h1>Arkiruoka</h1>
+          <p class="subtitle">Selkeä arjen ruokatyökalu omille ruoille, viikon suunnitteluun ja kauppalistaan.</p>
+        </div>
+        <div class="header-card">
+          <p class="header-card-label">Tavoite</p>
+          <strong>Yksi näkymä, koko viikko</strong>
+          <p>Suunnittele lounaat ja päivälliset ilman ylimääräistä säätöä.</p>
+        </div>
+      </header>
+
+      <nav class="tab-bar" aria-label="Päänavigaatio">
+        <button class="tab-button active" data-view="viikko">Viikkosuunnitelma</button>
+        <button class="tab-button" data-view="ruokapankki">Ruokapankki</button>
+        <button class="tab-button" data-view="lomake">Lisää / muokkaa ruoka</button>
+        <button class="tab-button" data-view="asetukset">Asetukset</button>
+      </nav>
+
+      <main class="view-stack">
+        <section class="view active" data-view-panel="viikko">
+          <section class="panel hero-panel">
+            <div class="hero-copy">
+              <h2>Viikon suunnitelma</h2>
+              <p id="week-label" class="muted"></p>
+            </div>
+            <div class="hero-actions">
+              <button id="auto-fill-button" class="primary-button">Täydennä automaattisesti</button>
+              <button id="clear-auto-button" class="secondary-button">Tyhjennä automaattiset</button>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-header">
+              <h3>Viikon näkymä</h3>
+              <div class="inline-actions">
+                <button class="secondary-button week-switch active" data-week-view="current">Nykyinen viikko</button>
+                <button class="secondary-button week-switch" data-week-view="previous">Edellinen viikko</button>
+              </div>
+            </div>
+            <div id="week-plan"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-header">
+              <h3>Kauppalista</h3>
+              <div class="inline-actions">
+                <button class="secondary-button shopping-mode active" data-shopping-mode="combined">Yhdistetty</button>
+                <button class="secondary-button shopping-mode" data-shopping-mode="grouped">Ryhmitelty</button>
+              </div>
+            </div>
+            <div id="shopping-list"></div>
+          </section>
+
+          <section class="panel">
+            <h3>Tämän viikon käyttö</h3>
+            <div id="usage-summary"></div>
+          </section>
+        </section>
+
+        <section class="view" data-view-panel="ruokapankki">
+          <section class="panel">
+            <div class="section-header">
+              <h2>Ruokapankki</h2>
+              <button id="new-food-button" class="primary-button">Lisää ruoka</button>
+            </div>
+            <div id="food-library"></div>
+          </section>
+        </section>
+
+        <section class="view" data-view-panel="lomake">
+          <section class="panel">
+            <div class="section-header">
+              <h2 id="form-title">Lisää ruoka</h2>
+              <button id="cancel-edit-button" class="secondary-button hidden" type="button">Peru muokkaus</button>
+            </div>
+            <form id="food-form" class="food-form">
+              <input type="hidden" id="food-id" />
+
+              <label>
+                Nimi
+                <input id="nimi" name="nimi" type="text" required />
+              </label>
+
+              <label>
+                Ateriatyyppi
+                <select id="ateriatyyppi" name="ateriatyyppi">
+                  <option value="lounas">Lounas</option>
+                  <option value="päivällinen">Päivällinen</option>
+                  <option value="molemmat">Molemmat</option>
+                </select>
+              </label>
+
+              <label>
+                Kohderyhmä
+                <select id="kohderyhmä" name="kohderyhmä">
+                  <option value="koko perhe">Koko perhe</option>
+                  <option value="aikuiset">Aikuiset</option>
+                  <option value="lapset">Lapset</option>
+                </select>
+              </label>
+
+              <label>
+                Syöntikerrat
+                <input id="syöntikerrat" name="syöntikerrat" type="number" min="1" max="5" value="1" />
+              </label>
+
+              <label>
+                Ruokatyyppi
+                <select id="ruokatyyppi" name="ruokatyyppi">
+                  <option value="kotiruoka">Kotiruoka</option>
+                  <option value="valmisruoka">Valmisruoka</option>
+                </select>
+              </label>
+
+              <label>
+                Suosikki-indeksi
+                <select id="suosikki_indeksi" name="suosikki_indeksi">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </label>
+
+              <label>
+                Ostoslista
+                <textarea id="ostoslista" name="ostoslista" rows="4"></textarea>
+              </label>
+
+              <label>
+                Resepti
+                <textarea id="resepti" name="resepti" rows="4"></textarea>
+              </label>
+
+              <label>
+                Reseptilinkki
+                <input id="reseptilinkki" name="reseptilinkki" type="url" />
+              </label>
+
+              <label>
+                Muistiinpanot
+                <textarea id="muistiinpanot" name="muistiinpanot" rows="4"></textarea>
+              </label>
+
+              <div class="form-actions">
+                <button type="submit" class="primary-button">Tallenna ruoka</button>
+              </div>
+            </form>
+          </section>
+        </section>
+
+        <section class="view" data-view-panel="asetukset">
+          <section class="panel">
+            <h2>Asetukset</h2>
+            <div class="settings-list">
+              <label class="checkbox-row">
+                <input id="children-default-toggle" type="checkbox" />
+                Näytä lasten ruoka oletuksena uudella viikolla
+              </label>
+            </div>
+            <p class="muted">Tiedot tallennetaan vain tämän laitteen selaimeen.</p>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="food-detail-dialog" class="detail-dialog">
+      <div id="food-detail-content"></div>
+      <form method="dialog" class="dialog-actions">
+        <button class="primary-button">Sulje</button>
+      </form>
+    </dialog>
+
+    <template id="empty-state-template">
+      <div class="empty-state">
+        <p></p>
+      </div>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
