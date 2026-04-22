@@ -40,10 +40,23 @@ const elements = {
 initialize();
 
 function initialize() {
+  registerServiceWorker();
   ensureWeekState();
   bindEvents();
   syncSettingsFields();
   render();
+}
+
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch((error) => {
+      console.error("Service workerin rekisterointi epäonnistui", error);
+    });
+  });
 }
 
 function bindEvents() {
@@ -766,7 +779,7 @@ function renderShoppingList() {
   const list = document.createElement("div");
   list.className = "shopping-list";
 
-  shopping.combined.forEach((item, index) => {
+  shopping.combined.forEach((item) => {
     const row = document.createElement("div");
     row.className = "shopping-card";
 
