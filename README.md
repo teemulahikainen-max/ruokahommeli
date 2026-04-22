@@ -14,6 +14,4 @@ Kevyt selainpohjainen sovellus viikoittaiseen ruokasuunnitteluun.
 
 Avaa `index.html` selaimessa.
 
-## Julkaisu puhelintestausta varten
 
-Repo sisältää staattisen web-sovelluksen, joten sen voi julkaista helposti GitHub Pagesilla.
